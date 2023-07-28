@@ -1,11 +1,14 @@
 import { app, BrowserWindow } from "electron";
 import * as path from "path";
+import events from "../common/Events";
 
-export default class MainWindow {
+class MainWindow {
     private window: BrowserWindow | null = null;
 
     constructor() {
-        this.create();
+        events.addEventListener("set-window-size", (event) => {
+            this.setSize(event.width, event.height);
+        });
     }
 
     async create() {
@@ -16,12 +19,9 @@ export default class MainWindow {
         await app.whenReady();
 
         this.window = new BrowserWindow({
-            height: 500,
             webPreferences: {
                 preload: path.join(__dirname, "preload.js"),
             },
-            width: 300,
-            show: false,
             frame: false,
         });
 
@@ -41,7 +41,6 @@ export default class MainWindow {
             return;
         } else {
             await this.create();
-            this.window?.show();
         }
     }
 
@@ -50,4 +49,14 @@ export default class MainWindow {
             this.window.close();
         }
     }
+
+    setSize(width: number, height: number) {
+        if (this.window) {
+            console.log(`Setting window size to ${width}x${height}`);
+            
+            this.window.setSize(width, height, true);
+        }
+    }
 }
+
+export default new MainWindow();

@@ -43,6 +43,11 @@ export default {
             CloseIcon: Close,
         }
     },
+    mounted() {
+        document.title = "Login";
+        // 设置html的宽高
+        window.events.emit("set-window-size", { width: 100, height: 100 });
+    },
     methods: {
         loginEnter() {
             this.$router.push("/home");

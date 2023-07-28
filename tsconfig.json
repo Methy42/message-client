@@ -1,15 +1,19 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "noImplicitAny": true,
-    "sourceMap": true,
-    "outDir": "dist",
-    "baseUrl": ".",
-    "paths": {
-      "*": ["node_modules/*"]
-    }
-  },
   "include": [
-    "src/**/*"
-  ]
+    "./src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "lib"
+  ],
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "./typings",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "lib": ["ES2022", "DOM"],
+    "strict": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true
+  }
 }

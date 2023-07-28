@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "A minimal Electron application written with Typescript",
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
-    "lint": "eslint -c .eslintrc --ext .ts ./src",
-    "start": "npm run build && electron ./dist/main.js"
+    "pack:dev": "rollup --config rollup.config.ts --environment NODE_ENV:development --configPlugin typescript",
+    "pack:pro": "rollup --config rollup.config.ts --environment NODE_ENV:production --configPlugin typescript",
+    "start": "npm run pack:dev && electron ./dist/main.js",
+    "build": "npm run pack:pro"
   },
   "repository": "https://github.com/electron/electron-quick-start-typescript",
   "keywords": [
@@ -18,13 +18,18 @@
     "typescript"
   ],
   "author": "GitHub",
-  "license": "CC0-1.0",
+  "license": "MIT",
   "devDependencies": {
+    "@rollup/plugin-replace": "^5.0.2",
+    "@rollup/plugin-typescript": "^11.1.2",
+    "@types/node": "^20.4.5",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
-    "electron": "^24.3.0",
+    "electron": "25.3.1",
     "eslint": "^7.32.0",
+    "rollup": "^3.26.3",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "tslib": "^2.6.1",
     "typescript": "^4.8.3"
-  },
-  "dependencies": {}
+  }
 }
