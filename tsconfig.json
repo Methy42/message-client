@@ -1,14 +1,15 @@
 {
   "include": [
-    "./src/**/*.ts"
+    "./src/**/*.ts",
+    "./ui/**/*.ts",
   ],
   "exclude": [
     "node_modules",
     "lib"
   ],
   "compilerOptions": {
-    "declaration": true,
-    "declarationDir": "./typings",
+    "target": "ES2022",
+    "declaration": false,
     "moduleResolution": "node",
     "noEmitOnError": true,
     "lib": ["ES2022", "DOM"],

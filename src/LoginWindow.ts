@@ -1,18 +1,13 @@
-import { app, BrowserWindow, ipcMain } from "electron";
-import * as path from "path";
+import path from "path";
+import { BrowserWindow, app, ipcMain } from "electron";
 
-class MainWindow {
+export default class LoginWindow {
     private window: BrowserWindow | null = null;
 
     constructor() {
-        ipcMain.on("set-window-size", (event, option) => {
-            console.log(`Setting window size to ${option.width}x${option.height}`);
-            
-            this.setSize(option.width, option.height);
-        });
     }
 
-    async create() {
+    private async create() {
         if (this.window) {
             return;
         }
@@ -20,6 +15,8 @@ class MainWindow {
         await app.whenReady();
 
         this.window = new BrowserWindow({
+            width: 300,
+            height: 500,
             webPreferences: {
                 nodeIntegration: true,
                 contextIsolation: false,
@@ -29,7 +26,7 @@ class MainWindow {
             frame: false,
         });
 
-        this.window.loadURL("http://localhost:5173/");
+        this.window.loadFile(path.join(__dirname, "./ui/login/index.html"));
         this.window.webContents.openDevTools({ mode: "detach" });
 
         this.window.on("closed", () => {
@@ -53,14 +50,4 @@ class MainWindow {
             this.window.close();
         }
     }
-
-    setSize(width: number, height: number) {
-        if (this.window) {
-            console.log(`Setting window size to ${width}x${height}`);
-            
-            this.window.setSize(width, height, true);
-        }
-    }
 }
-
-export default new MainWindow();

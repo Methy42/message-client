@@ -1,6 +1,8 @@
 import { app, BrowserWindow, ipcMain } from "electron";
-import mainWindow from "./MainWindow";
+import LoginWindow from "./LoginWindow";
 import events, { EventMap } from "../common/Events";
+
+const loginWindow = new LoginWindow();
 
 let singleLock = app.requestSingleInstanceLock();
 if (!singleLock) {
@@ -11,12 +13,12 @@ if (!singleLock) {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-    mainWindow.open();
+    loginWindow.open();
 
     app.on("activate", function () {
         // On macOS it's common to re-create a window in the app when the
         // dock icon is clicked and there are no other windows open.
-        if (BrowserWindow.getAllWindows().length === 0) mainWindow.open();
+        if (BrowserWindow.getAllWindows().length === 0) loginWindow.open();
     });
 });
 
@@ -34,7 +36,7 @@ app.on("window-all-closed", () => {
 
 
 app.on("second-instance", () => {
-    mainWindow.open();
+    loginWindow.open();
 });
 
 new Array<keyof EventMap>("set-window-size").forEach((event) => {

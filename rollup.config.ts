@@ -1,76 +1,61 @@
 import { defineConfig } from "rollup";
 import typescript from "@rollup/plugin-typescript";
 import replace from '@rollup/plugin-replace';
-import commonjs from 'rollup-plugin-commonjs';
+import commonjs from '@rollup/plugin-commonjs';
+import html from '@rollup/plugin-html';
 
-console.log("start", process.env.NODE_ENV);
-
-const mainPlugins = [
-    typescript({ tsconfig: './tsconfig.json' }),
-    commonjs({
-        // non-CommonJS modules will be ignored, but you can also
-        // specifically include/exclude files
-        include: 'node_modules/**',  // Default: undefined
-        exclude: ['node_modules/foo/**', 'node_modules/bar/**'],  // Default: undefined
-        // these values can also be regular expressions
-        // include: /node_modules/
-
-        // search for files other than .js files (must already
-        // be transpiled by a previous plugin!)
-        extensions: ['.js', '.coffee'],  // Default: [ '.js' ]
-
-        // if true then uses of `global` won't be dealt with by this plugin
-        ignoreGlobal: false,  // Default: false
-
-        // if false then skip sourceMap generation for CommonJS modules
-        sourceMap: false,  // Default: true
-
-        // explicitly specify unresolvable named exports
-        // (see below for more details)
-        namedExports: { 'react': ['createElement', 'Component'] },  // Default: undefined
-
-        // sometimes you have to leave require statements
-        // unconverted. Pass an array containing the IDs
-        // or a `id => boolean` function. Only use this
-        // option if you know what you're doing!
-        ignore: ['conditional-runtime-dependency']
-    }),
-    replace({
-        'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`
-    })
-];
-
-const preloadPlugins = [
-    typescript({ 
-        "target": "es5",
-        "module": "es2015",
-        "lib": ["dom", "es2015"],
-        "strict": false,
-        "esModuleInterop": true,
-        "allowJs": true,
-        "noEmitOnError": true,
-        "downlevelIteration": true,
-        "exclude": [
-            "node_modules",
-            "lib"
-        ]
-    })
-];
+console.log("[ start ] - env: ", process.env.NODE_ENV);
 
 export default defineConfig([{
     input: "src/main.ts",
-    plugins: mainPlugins,
+    plugins: [
+        typescript(),
+        commonjs({
+            include: 'node_modules/**',  // Default: undefined
+            extensions: ['.js', '.coffee'],  // Default: [ '.js' ]
+            ignoreGlobal: false,  // Default: false
+            sourceMap: false,  // Default: true
+            ignore: ['conditional-runtime-dependency']
+        }),
+        replace({
+            preventAssignment: true,
+            'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`
+        }),
+        (() => {
+            if (process.argv.includes('--watch')) {
+                return require("./plugins/plugin-electron")();
+            } else {
+                return undefined;
+            }
+        })()
+    ],
     output: [{
         file: "dist/main.js",
         format: "cjs",
         sourcemap: true
     }]
 }, {
-    input: "src/preload.ts",
-    plugins: preloadPlugins,
+    input: "ui/login.ts",
+    plugins: [
+        typescript(),
+        commonjs({
+            include: 'node_modules/**',  // Default: undefined
+            extensions: ['.js', '.coffee'],  // Default: [ '.js' ]
+            ignoreGlobal: false,  // Default: false
+            sourceMap: false,  // Default: true
+            ignore: ['conditional-runtime-dependency']
+        }),
+        replace({
+            preventAssignment: true,
+            'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`
+        }),
+        html({
+            title: "Login",
+        })
+    ],
     output: [{
-        file: "dist/preload.js",
-        format: "cjs",
+        dir: "dist/ui/login",
+        format: 'cjs',
     }]
 }]);
 
