@@ -1,5 +1,5 @@
 {
-  "name": "electron-quick-start-typescript",
+  "name": "message-client",
   "version": "1.0.0",
   "description": "A minimal Electron application written with Typescript",
   "scripts": {
@@ -10,7 +10,7 @@
     "electron": "electron ./dist/main.js",
     "start": "npm run watch"
   },
-  "repository": "https://github.com/electron/electron-quick-start-typescript",
+  "repository": "https://github.com/Methy42/message-client",
   "keywords": [
     "Electron",
     "quick",
@@ -19,7 +19,7 @@
     "demo",
     "typescript"
   ],
-  "author": "GitHub",
+  "author": "Methy42",
   "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.3",
@@ -27,12 +27,21 @@
     "@rollup/plugin-replace": "^5.0.2",
     "@rollup/plugin-typescript": "^11.1.2",
     "@types/node": "^20.4.5",
+    "@types/react-dom": "^18.2.7",
+    "@types/rollup-plugin-css-only": "^3.1.0",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "electron": "25.3.1",
     "eslint": "^7.32.0",
     "rollup": "^3.27.0",
+    "rollup-plugin-css-only": "^4.3.0",
     "tslib": "^2.6.1",
     "typescript": "^4.8.3"
+  },
+  "dependencies": {
+    "antd": "^5.8.1",
+    "dayjs": "^1.11.9",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

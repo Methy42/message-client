@@ -35,7 +35,7 @@ export default defineConfig([{
         sourcemap: true
     }]
 }, {
-    input: "ui/login.ts",
+    input: "ui/login.tsx",
     plugins: [
         typescript(),
         commonjs({
@@ -49,6 +49,7 @@ export default defineConfig([{
             preventAssignment: true,
             'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`
         }),
+        require("./plugins/plugin-css")(),
         html({
             title: "Login",
         })

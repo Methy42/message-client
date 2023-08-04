@@ -2,6 +2,7 @@
   "include": [
     "./src/**/*.ts",
     "./ui/**/*.ts",
+    "./ui/**/*.tsx"
   ],
   "exclude": [
     "node_modules",
@@ -15,6 +16,7 @@
     "lib": ["ES2022", "DOM"],
     "strict": true,
     "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react"
   }
 }
