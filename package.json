@@ -32,7 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "electron": "25.3.1",
-    "eslint": "^7.32.0",
+    "eslint": "^8.46.0",
     "rollup": "^3.27.0",
     "rollup-plugin-css-only": "^4.3.0",
     "tslib": "^2.6.1",
